@@ -1,0 +1,6 @@
+mise.toml
+# IntelliJ IDEA project files
+.idea/
+
+# mvn
+/target
