@@ -1,5 +1,6 @@
 package com.yachshekhar.lru;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -7,10 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class LRUEvictionPolicy<K> implements  EvictionPolicy<K> {
     private final DoublyLinkedList<K> dll;
-    private Map<K, Node<K>> keyNodeRef;
-    LRUEvictionPolicy(long capacity) {
+    private final Map<K, Node<K>> keyNodeRef;
+    public LRUEvictionPolicy() {
         this.dll = new DoublyLinkedList<>();
-        this.keyNodeRef = new ConcurrentHashMap<>();
+        this.keyNodeRef = new HashMap<>();
     }
     @Override
     public void onAccess(K key) {

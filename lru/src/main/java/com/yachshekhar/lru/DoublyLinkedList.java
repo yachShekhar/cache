@@ -35,16 +35,10 @@ public class DoublyLinkedList<K> {
         node.setNext(null);
     }
 
-    void removeLast(){
-        Node<K> prevLast = tail.getPrev();
-        remove(prevLast);
-    }
-
     Optional<K> getLastKey(){
-        K key = null;
-        if(tail.getPrev() != head) {
-            key = tail.getPrev().getKey();
+        if(tail.getPrev() == head) {
+            return Optional.empty();
         }
-        return Optional.of(key);
+        return Optional.of(tail.getPrev().getKey());
     }
 }

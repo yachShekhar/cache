@@ -4,3 +4,4 @@ mise.toml
 
 # mvn
 /target
+lru/target/*.class
