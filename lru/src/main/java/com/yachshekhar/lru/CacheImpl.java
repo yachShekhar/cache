@@ -22,7 +22,13 @@ public class CacheImpl<K, V> implements Cache<K, V> {
          Objects.requireNonNull(value, "Value must not be null");
          lock.lock();
          try {
-             if (!storage.containsKey(key) && storage.size() == capacity) {
+             // Overriding a key -> no eviction happens here
+             if (storage.containsKey(key)) {
+                 storage.put(key, value);
+                 evictionPolicy.onAccess(key);
+                 return;
+             }
+             if (storage.size() == capacity) {
                  K evictKey = evictionPolicy.getEvictKey()
                          .orElseThrow(()->new IllegalStateException("Cache is full but eviction policy has no key to evict."));
                  delete(evictKey);

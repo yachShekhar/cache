@@ -13,6 +13,8 @@
     <modules>
         <module>lru</module>
         <module>lfu</module>
+        <module>ttl-cache</module>
+        <module>distributed-cache</module>
     </modules>
 
     <properties>
