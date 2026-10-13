@@ -28,7 +28,7 @@ public class CacheImpl<K, V> implements Cache<K, V> {
                  delete(evictKey);
              }
              storage.put(key, value);
-             evictionPolicy.onAccess(key);
+             evictionPolicy.onAdd(key);
          } finally {
              lock.unlock();
          }

@@ -4,41 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LRUEvictionPolicy<K> implements  EvictionPolicy<K> {
-    private final DoublyLinkedList<K> dll;
-    private final Map<K, Node<K>> keyNodeRef;
+
+    private final CustomLinkedHashSet<K> linkedHashSet;
     public LRUEvictionPolicy() {
-        this.dll = new DoublyLinkedList<>();
-        this.keyNodeRef = new HashMap<>();
+        linkedHashSet= new CustomLinkedHashSetImpl<K>();
     }
     @Override
     public void onAccess(K key) {
         Objects.requireNonNull(key, "`key` must not be null");
-        Node<K> node = keyNodeRef.get(key);
-        if (node != null) {
-            dll.remove(node); // remove the node
-        } else {
-            node = new Node<>();
-            node.setKey(key);
-        }
-        dll.add(node);  // keep at first
-        keyNodeRef.put(key, node);
+        linkedHashSet.remove(key);
+        linkedHashSet.add(key);
+    }
+    @Override
+    public void onAdd(K key) {
+        Objects.requireNonNull(key, "`key` must not be null");
+        linkedHashSet.add(key);
     }
 
     @Override
     public void onDelete(K key) {
         Objects.requireNonNull(key, "`key` must not be null");
-        Node<K> node = keyNodeRef.get(key);
-        if (node != null) {
-            dll.remove(node);
-            keyNodeRef.remove(node.getKey());
-        }
+        linkedHashSet.remove(key);
     }
 
     @Override
     public Optional<K> getEvictKey() {
-        return dll.getLastKey();
+        return linkedHashSet.getFirst();
     }
 }

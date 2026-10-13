@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>com.yachshekhar</groupId>
-        <artifactId>cache-parent</artifactId>
+        <artifactId>cache</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cache-lru</artifactId>
-    <name>cache-lru</name>
+    <artifactId>lru</artifactId>
+    <name>lru</name>
 </project>
